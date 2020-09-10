@@ -35,9 +35,9 @@ puerto_rico_hurricane_dates <- as.Date(c("1989-09-18","1998-09-21","2017-09-20")
 puerto_rico_out_dates <- exclude_dates
 
 # -- Dates to exclude for each hurricane
-exclude_dates  <- list(Katrina = interval_start[["Katrina"]]  + -365:365,
-                       Sandy   = interval_start[["Sandy"]]  + -365:365,
-                       Irma    = interval_start[["Irma"]] + -365:365,
+exclude_dates  <- list(Katrina = interval_start[["Katrina"]] + 0:180,
+                       Sandy   = interval_start[["Sandy"]]   + 0:180,
+                       Irma    = interval_start[["Irma"]]    + 0:180,
                        Hugo    = puerto_rico_out_dates,
                        Georges = puerto_rico_out_dates,
                        Maria   = puerto_rico_out_dates)
@@ -169,17 +169,17 @@ excess_deaths <- map_df(seq_along(interval_start), function(i)
                            event == "Georges" ~ "PR: Georges",
                            event == "Maria" ~ "PR: Maria"),
          event = factor(event, levels = c("PR: Maria", "PR: Georges", "PR: Hugo",
-                                          "NJ: Sandy", "LA: Katrina", "FL: Irma")))
+                                          "NJ: Sandy", "LA: Katrina", "FL: Irma")),
+         lwr = fitted-1.96*se,
+         upr = fitted+1.96*se,
+         day = as.numeric(date - event_day))
 
 # -- Things to be use in the viz
 tmp <- excess_deaths %>%
-  mutate(lwr = fitted-1.96*se,
-         upr = fitted+1.96*se) %>%
-  mutate(day = as.numeric(date - event_day)) %>%
   filter(event %in% c("PR: Maria", "PR: Georges", "LA: Katrina")) %>%
   mutate(estimate = case_when(event == "PR: Maria" ~ 3274,
                               event == "PR: Georges" ~ 1213,
-                              event == "LA: Katrina" ~ 1428),
+                              event == "LA: Katrina" ~ 1517),
          period = case_when(event == "PR: Maria" ~ 191,
                             event == "PR: Georges" ~ 85,
                             event == "LA: Katrina" ~ 108)) %>%
@@ -211,6 +211,3 @@ ggsave(filename = "figs/figure-hurricane-excess-deaths.pdf",
        width    = 4,
        height   = 3, 
        dpi      = 300)
-### -- ------------------------------ ------------------------------------------------------------------
-### -- Figure 2B: Excess deaths in PR ------------------------------------------------------------------
-### -- ------------------------------ ------------------------------------------------------------------
