@@ -444,7 +444,7 @@ ggplot() +
   geom_text(aes(posx, posy, color=type, label=type), hjust=0, size=3, show.legend = F, data = lab) +
   geom_text(aes(make_date(2020,05,01), 7000, label="Reported Covid-19 deaths"), hjust=0, size=3) +
   scale_y_continuous(labels = scales::comma,
-                     breaks = seq(0, 200000, by=50000)) +
+                     breaks = seq(0, 250000, by=50000)) +
   scale_x_date(date_labels = "%b %Y", date_breaks = "2 months") +
   theme(text = element_text(size = 10))
 
