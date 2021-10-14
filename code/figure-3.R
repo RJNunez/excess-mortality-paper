@@ -87,10 +87,10 @@ fig3a <- res %>%
   geom_ribbon(aes(ymin = lwr, 
                   ymax = upr), 
               alpha = 0.20,
-              fill  = my_palette[["blue"]]) +
+              fill  = my_palette[["black"]]) +
   geom_line(size  = 1,
             color = "white") +
-  geom_line(color = my_palette[["blue"]]) +
+  geom_line(color = my_palette[["black"]]) +
   xlab("Date") +
   ylab("Percent increase from expected mortality") +
   scale_x_date(date_labels = "%b", date_breaks = "3 months") +
@@ -188,10 +188,10 @@ fig3b <- chikungunya %>%
   scale_y_continuous(labels = scales::comma) +
   geom_ribbon(aes(ymin = lwr, ymax = upr), 
               alpha = 0.20,
-              fill  = my_palette[["blue"]]) + 
+              fill  = my_palette[["black"]]) + 
   geom_line(size  = 1, 
             color = "white") +
-  geom_line(color = my_palette[["blue"]]) +
+  geom_line(color = my_palette[["black"]]) +
   theme(text = element_text(size=10))
 
 # -- Saving figure
@@ -250,10 +250,10 @@ fig3c <- with(fit, tibble(date, fitted, se)) %>%
                   ymax = upr),
               alpha       = 0.20, 
               color       = NA,
-              fill        = my_palette[["blue"]]) +
+              fill        = my_palette[["black"]]) +
   geom_line(size  = 1,
             color = "white") +
-  geom_line(color = my_palette[["blue"]]) +
+  geom_line(color = my_palette[["black"]]) +
   xlab("Date") +
   ylab("Percent change from expected mortality") +
   scale_y_continuous(labels = scales::percent) +
@@ -292,20 +292,21 @@ fig3d <- ggplot() +
             size  = 1,
             data  = filter(covid_us, date >= "2020-03-07")) +
   geom_line(aes(date, death),
-            color = my_palette[["black"]],
+            lty   = 2,
+            color = "gray",
             data  = filter(covid_us, date >= "2020-03-07")) +
   geom_ribbon(aes(x    = date, 
                   ymin = lwr, 
                   ymax = upr), 
               alpha = 0.20,
-              fill  = my_palette[["blue"]],
+              fill  = my_palette[["black"]],
               data  = ed_usa) +
   geom_line(aes(x = date, y = fitted), 
             size  = 1,
             color = "white",
             data  = ed_usa) +
   geom_line(aes(x = date, y = fitted), 
-            color = my_palette[["blue"]],
+            color = my_palette[["black"]],
             data  = ed_usa) + 
   scale_y_continuous(labels = scales::comma,
                      breaks = seq(0, 600000, by=100000)) +
@@ -315,12 +316,12 @@ fig3d <- ggplot() +
   geom_text(aes(make_date(2020,05,01), 40000, label="Cumulative excess deaths"), 
             hjust    = 0, 
             fontface = "bold",
-            color    = my_palette[["blue"]],
+            color    = my_palette[["black"]],
             size     = 3) +
   geom_text(aes(make_date(2020,05,01), 7000, label="Reported Covid-19 deaths"), 
             hjust    = 0, 
             fontface = "bold",
-            color    = my_palette[["black"]],
+            color    = "gray",
             size     = 3) +
   theme(text = element_text(size = 10))
 
